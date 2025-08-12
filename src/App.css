@@ -1,38 +1,97 @@
-.App {
-  text-align: center;
+/* src/App.css - upgraded styles */
+
+:root{
+  --accent: #6c63ff;
+  --accent-2: #42a5f5;
+  --bg: #f7f9fc;
+  --card: #ffffff;
+  --text: #222;
 }
 
-.App-logo {
-  height: 40vmin;
+* { box-sizing: border-box; }
+body { margin:0; font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+
+/* background classes (animated) */
+.app {
+  min-height: 100vh;
+  display:flex;
+  flex-direction:column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Floating decorative shapes (behind content) */
+.floating-shapes {
+  position: fixed;
+  top: 0; left:0; width:100%; height:100%; z-index:-10; overflow:hidden;
   pointer-events: none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.floating-shapes span {
+  position:absolute; display:block; border-radius:50%; opacity:0.12;
+  animation: float linear infinite;
 }
+.floating-shapes span:nth-child(1){ width:120px; height:120px; left:5%; top:10%; background:#6c63ff; animation-duration:28s;}
+.floating-shapes span:nth-child(2){ width:200px; height:200px; left:70%; top:70%; background:#42a5f5; animation-duration:35s;}
+.floating-shapes span:nth-child(3){ width:90px; height:90px; left:40%; top:40%; background:#ff6b6b; animation-duration:22s;}
+.floating-shapes span:nth-child(4){ width:60px; height:60px; left:80%; top:20%; background:#ffd166; animation-duration:26s;}
+.floating-shapes span:nth-child(5){ width:45px; height:45px; left:15%; top:80%; background:#6dd3b2; animation-duration:30s;}
+@keyframes float { 0%{ transform: translateY(0) rotate(0);} 100%{ transform: translateY(-1200px) rotate(360deg);} }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+/* Header */
+.app-header { display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1.2rem 1rem; background: linear-gradient(135deg,var(--accent),var(--accent-2)); color:white; }
+.brand h1{ margin:0; font-size:1.4rem; }
+.controls { display:flex; gap:0.6rem; align-items:center; }
 
-.App-link {
-  color: #61dafb;
-}
+/* container */
+.container { width:100%; max-width:960px; margin:-40px auto 2rem; padding:1.5rem; background:var(--card); border-radius:12px; box-shadow:0 10px 30px rgba(16,24,40,0.08); }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Search */
+.search-bar { display:flex; gap:0.5rem; margin-bottom:1rem; }
+.search-bar input{ flex:1; padding:0.6rem 0.8rem; border-radius:8px; border:1px solid #e6e9ef; font-size:1rem; }
+.search-bar button{ padding:0.6rem 1rem; border-radius:8px; border:none; background:var(--accent); color:white; cursor:pointer; }
+
+/* Weather widget */
+.weather-widget { text-align:center; padding:1.2rem; border-radius:10px; margin-top:0.5rem; background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9)); }
+.weather-widget .main { display:flex; align-items:center; justify-content:center; gap:1rem; }
+.weather-widget img { width:80px; height:80px; }
+.location { margin:0; font-size:1.2rem; }
+.temps h3 { margin:0; font-size:1.8rem; }
+.desc { margin-top:0.2rem; text-transform:capitalize; }
+.extras { display:flex; gap:1rem; justify-content:center; margin-top:0.8rem; color:#666; }
+
+/* Forecast list */
+.forecast-list { display:flex; gap:1rem; justify-content:center; margin-top:1rem; flex-wrap:wrap; }
+.forecast-card { background: rgba(255,255,255,0.9); padding:0.8rem; border-radius:8px; width:120px; text-align:center; box-shadow:0 6px 20px rgba(16,24,40,0.06); }
+
+/* Unit toggle */
+.unit-toggle button { padding:0.4rem 0.6rem; border-radius:6px; border:none; cursor:pointer; background:rgba(255,255,255,0.12); color:#fff; }
+.unit-toggle button.active { background:#fff; color:#333; }
+
+/* muted / error */
+.muted { color:#6b7280; }
+.error { color:#b91c1c; }
+
+/* footer */
+.footer { text-align:center; margin:1.5rem 0 3rem; color:#6b7280; }
+
+/* dark mode overrides */
+body.dark-mode { background:#0b1020; color:#e6eef8; }
+body.dark-mode .container { background:#0f1724; box-shadow:0 8px 30px rgba(2,6,23,0.7); }
+body.dark-mode .search-bar input { background:#0b1220; border:1px solid rgba(255,255,255,0.06); color:#cfe8ff; }
+body.dark-mode .search-bar button { background:#4f46e5; color:white; }
+body.dark-mode .forecast-card, body.dark-mode .weather-widget { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.06)); color:#cfe8ff; }
+
+/* animated backgrounds per weather type (subtle) */
+.bg-clear { background: linear-gradient(180deg, #a8edea, #fed6e3); }
+.bg-clouds { background: linear-gradient(180deg,#dfe9f3,#ffffff); }
+.bg-rain { background: linear-gradient(180deg,#c0d9ff,#e6f3ff); }
+.bg-snow { background: linear-gradient(180deg,#e6f7ff,#ffffff); }
+.bg-thunder { background: linear-gradient(180deg,#cbd3ff,#f0f4ff); }
+.bg-default { background: linear-gradient(180deg,#f7f9fc,#ffffff); }
+
+/* small screens */
+@media (max-width:600px) {
+  .forecast-list { gap:0.6rem; }
+  .forecast-card { width:100px; }
+  .app-header { flex-direction:column; align-items:flex-start; gap:0.6rem; }
 }
